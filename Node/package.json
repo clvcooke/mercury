@@ -1,0 +1,22 @@
+{
+  "name": "meetme",
+  "readme": "package.json for project agora",
+  "repository": "",
+  "version": "1.0.0",
+  "description": "meet me package",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install"
+  },
+  "author": "Colin Cooke, Michael Jonas, David Huang",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.4.2",
+    "bower": "^1.6.5",
+    "express": "^4.5.1",
+    "kerberos": "0.0.17",
+    "method-override": "^2.0.2",
+    "mongodb": "^2.0.48",
+    "mongoose": "^4.2.6"
+  }
+}

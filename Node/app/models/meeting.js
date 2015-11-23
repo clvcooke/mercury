@@ -1,8 +1,17 @@
-//grab the mongoose module
+/**
+ * Created by Colin on 11/22/2015.
+ */
 var mongoose = require('mongoose');
 
-//define the meeting model
-// module.exportsallows the passing of the to other files when its called
-module.exports = mongoose.model('Meeting', {
-	name : {type : String, default: ''}
+var MeetingSchema = new mongoose.Schema({
+    time : Number,
+    location : [Number],
+    user : mongoose.Schema.Types.ObjectId,
+    subject : String
 });
+
+var Meeting = mongoose.model('Meeting', MeetingSchema);
+
+module.exports = {
+    Meeting : Meeting
+}

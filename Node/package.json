@@ -1,22 +1,21 @@
 {
-  "name": "meetme",
-  "readme": "package.json for project agora",
-  "repository": "",
+  "name": "Project-Limbo",
   "version": "1.0.0",
-  "description": "meet me package",
-  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/clvcooke/limbo.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "angular-route": "^1.4.7",
+    "async": "^1.5.0",
+    "bower": "^1.6.5",
+    "ejs": "~1.0.0",
+    "express": "~4.0.0",
+    "mongoose": "^4.2.7",
+    "kerberos": "^0.0.17"
+  },
   "scripts": {
     "postinstall": "bower install"
-  },
-  "author": "Colin Cooke, Michael Jonas, David Huang",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.4.2",
-    "bower": "^1.6.5",
-    "express": "^4.5.1",
-    "kerberos": "0.0.17",
-    "method-override": "^2.0.2",
-    "mongodb": "^2.0.48",
-    "mongoose": "^4.2.6"
   }
 }

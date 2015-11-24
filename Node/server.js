@@ -36,14 +36,7 @@ var Meeting = require("./app/models/meeting").Meeting;
 
 app.get('/findUser', function (req, res) {
     if (req.query && req.query.name) {
-        var callback = function (err, user) {
-            if (err) {
-                console.log("ERR: " + err);
-                res.send("Failure", 403);
-            }else {
-                res.json(user);
-            }
-        };
+
         User.find({name: req.query.name}).exec(callback);
     }
 });
@@ -75,6 +68,7 @@ app.get('/createUser', function (req, res) {
  App Startup
  ************************************************************/
 require('./app/pageRoutes')(app);
+require('./app/userRoutes')(app);
 
 var server = app.listen(PORT, function () {
     console.log("Server started successfully on port " + PORT + ".");

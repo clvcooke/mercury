@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Limbo</title>
+        <link rel="stylesheet" href="css/style.css">
+  </head>
+
+  <body>
+
+    <html lang="en" ng-app="Limbo">
+
+<head>
+  <meta name="viewport" content="initial-scale=1" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.css">
+</head>
+
+<body layout="column" ng-controller="AppController as vm">
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <md-button ng-click="vm.toggleSidenav('left')" hide-gt-sm class="md-icon-button">
+        <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg">
+        </md-icon>
+      </md-button>
+      <h1 class="md-title">Agora</h1>
+    </div>
+  </md-toolbar>
+  <div layout="row" flex>
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+        <md-button class="md-raised" ng-click="onCreateClick()">Create</md-button>
+        <md-button class="md-raised" ng-click="onBrowseClick()">Browse</md-button>
+    </md-sidenav>
+    <div layout="column" flex id="content">
+      <md-content layout="column" flex class="md-padding">
+          <md-input-container>
+              <label>Address</label>
+              <input type="text" ng-model="vm.meeting.address"/>
+          </md-input-container>
+          <md-input-container>
+              <label>Category</label>
+              <input type="text" ng-model="vm.meeting.category"/>
+          </md-input-container>
+          <md-button class="md-accent" ng-click="onSubmitClick()" >Submit</md-button>
+
+      </md-content>
+    </div>
+  </div>
+  <!-- Angular Material Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.js"></script>
+</body>
+
+</html>
+
+        <script src="js/index.js"></script>
+
+
+
+
+  </body>
+</html>

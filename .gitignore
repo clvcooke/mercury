@@ -25,6 +25,6 @@ npm-debug.log
 ## Directories
 #################
 
-NodeJS/bower_components/
-NodeJS/node_modules/
-NodeJS/.idea/
+Node/bower_components/
+Node/node_modules/
+Node/.idea/

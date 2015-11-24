@@ -1,4 +1,4 @@
-var app = angular.module('Limbo', ['ngMaterial']);
+var app = angular.module('Agora', ['ngMaterial']);
 
 app.controller('AppController', function ($scope, $http, $mdSidenav) {
     var vm = this;
@@ -16,8 +16,6 @@ app.controller('AppController', function ($scope, $http, $mdSidenav) {
     $scope.onBrowseClick = function() {
 
     };
-
-
 
     vm.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();

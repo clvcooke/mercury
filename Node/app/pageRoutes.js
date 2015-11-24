@@ -5,5 +5,9 @@ module.exports = function(app)
 	app.get('/', function(req, res){
 		res.render("../public/index.html");
 	});
-	
-}
+
+    app.get('/meetings/*', function(req, res){
+
+    });
+
+};

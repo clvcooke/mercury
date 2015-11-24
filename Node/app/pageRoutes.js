@@ -6,4 +6,8 @@ module.exports = function(app)
 		res.render("../public/index.html");
 	});
 
-}
+    app.get('/meetings/*', function(req, res){
+
+    });
+
+};

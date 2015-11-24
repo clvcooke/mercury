@@ -61,7 +61,7 @@ app.get('/createUser', function (req, res) {
             }else{
                 res.send("Success",200);
             }
-        }
+        };
 
         var user = new User({name : name, transport : transport, channels : channels});
         user.save(callback);
@@ -74,7 +74,7 @@ app.get('/createUser', function (req, res) {
 /***********************************************************
  App Startup
  ************************************************************/
-require('./app/routes')(app);
+require('./app/pageRoutes')(app);
 
 var server = app.listen(PORT, function () {
     console.log("Server started successfully on port " + PORT + ".");

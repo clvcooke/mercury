@@ -7,6 +7,8 @@ const PORT = 3000;
 var express = require('express');
 var app = express();
 var ejs = require('ejs');
+var request = require('request');
+var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 
@@ -23,6 +25,9 @@ db.once('open', function (callback) {
 
 app.engine('html', ejs.renderFile);
 app.use(express.static("./public"));
+// Allows you to parse body messages
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(express.static(__dirname + "/bower_components"));
 
 //grabbing the schemas
@@ -48,6 +53,16 @@ app.get('/findUser', function (req, res) {
     }
 });
 
+app.post('/test', function(req, res) {
+    var requestString = req.body.request;
+    request(requestString, function (error, response, body) {
+      if (!error && response.statusCode/100 !== 4) {
+        console.log(body)
+      }
+    })
+    res.send(200);
+});
+
 app.get('/createUser', function (req, res) {
     if (req.query && req.query.name) {
 
@@ -68,6 +83,7 @@ app.get('/createUser', function (req, res) {
     } else {
         res.send("Invalid - need name", 406);
     }
+
 });
 
 

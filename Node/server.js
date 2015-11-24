@@ -22,7 +22,7 @@ db.once('open', function (callback) {
 });
 
 app.engine('html', ejs.renderFile);
-app.use(express.static("../public"));
+app.use(express.static("./public"));
 //app.use(express.static(__dirname + "/bower_components"));
 
 //grabbing the schemas

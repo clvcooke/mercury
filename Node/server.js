@@ -15,12 +15,11 @@ var mongoose = require('mongoose');
 /***********************************************************
  Configuration
  ************************************************************/
-
 mongoose.connect('mongodb://159.203.31.35:27017/test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
-    console.log('connected to mongo');
+    console.log('Connected to Mongo');
 });
 
 app.engine('html', ejs.renderFile);
@@ -28,11 +27,13 @@ app.use(express.static("./public"));
 // Allows you to parse body messages
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(express.static(__dirname + "/bower_components"));
 
 //grabbing the schemas
 var User = require("./app/models/user").User;
 var Meeting = require("./app/models/meeting").Meeting;
+
+// Private configuration
+var privateConfig = require('./config.js')();
 
 
 /*************************************
@@ -46,9 +47,10 @@ app.get('/findUser', function (req, res) {
     }
 });
 
-app.post('/test', function(req, res) {
+app.post('/locator', function(req, res) {
     var requestString = req.body.request;
-    request(requestString, function (error, response, body) {
+    var key = '&key=' + privateConfig.API_KEY;
+    request(requestString + key, function (error, response, body) {
       if (!error && response.statusCode/100 !== 4) {
         console.log(body)
       }

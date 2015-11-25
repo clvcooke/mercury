@@ -1,12 +1,5 @@
-var app = angular.module('Agora', ['ngMaterial']);
-
-app.controller('AppController', function ($scope, $http, $mdSidenav) {
+app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'Categories', function ($scope, $http, $mdSidenav, Categories) {
     var vm = this;
-
-    vm.currentPos = {
-        latitude: '',
-        longitue: ''
-    }
 
     vm.meeting = {
         from: {},
@@ -17,6 +10,9 @@ app.controller('AppController', function ($scope, $http, $mdSidenav) {
         address: '',
         category: ''
     }
+    vm.category = "all";
+    vm.categories = Categories.categories;
+    vm.prettyCategory = Categories.prettyCategory;
 
     vm.onSubmitLocator = function () {
         var requestString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
@@ -24,21 +20,22 @@ app.controller('AppController', function ($scope, $http, $mdSidenav) {
         var longitude = $scope.gPlace.getPlace().geometry.location.lng();
         requestString += "location=" + latitude + ","  + longitude;
         requestString += "&radius=" + vm.radius * 1000;
+        requestString += vm.category === 'all' ? '' : '&category="'+ vm.category;
         json = JSON.stringify({request: requestString});
-        console.log(requestString)
+        console.log(requestString);
 
         $http({
-            url: "http://localhost:3000/test",
+            url: "http://localhost:3000/locator",
             dataType: "json",
             data: json,
             method: "POST",
         }).success(function(res) {
-               
+                console.log('Success');
             });
     };
 
     vm.onCreateClick = function() {
-
+        console.log(vm.category)
     };
 
     vm.onBrowseClick = function() {
@@ -62,4 +59,4 @@ app.controller('AppController', function ($scope, $http, $mdSidenav) {
         }
     }
 
-});
+}]);

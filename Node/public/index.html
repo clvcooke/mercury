@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.css">
 </head>
 
-<body layout="column" ng-controller="AppController as vm">
+<body layout="column" ng-controller="MainController as vm">
   <md-toolbar layout="row">
     <div class="md-toolbar-tools">
       <md-button ng-click="vm.toggleSidenav('left')" hide-gt-sm class="md-icon-button">
@@ -25,39 +25,80 @@
       <h1 class="md-title">Agora</h1>
     </div>
   </md-toolbar>
-  <div layout="row" flex>
-    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-        <md-button class="md-raised" ng-click="onCreateClick()">Create</md-button>
-        <md-button class="md-raised" ng-click="onBrowseClick()">Browse</md-button>
-    </md-sidenav>
-    <div layout="column" flex id="content">
-      <md-content layout="column" flex class="md-padding">
-          <md-input-container>
-              <label>Address</label>
-              <input type="text" ng-model="vm.meeting.address"/>
-          </md-input-container>
-          <md-input-container>
-              <label>Category</label>
-              <input type="text" ng-model="vm.meeting.category"/>
-          </md-input-container>
-          <md-button class="md-accent" ng-click="onSubmitClick()" >Submit</md-button>
-
-      </md-content>
-    </div>
+  <div ng-cloak>
+    <md-content>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="locator">
+          <md-content class="md-padding">
+            <div layout="row" flex>
+              <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+                  <md-button class="md-raised" ng-click="vm.onCreateClick()">Create</md-button>
+                  <md-button class="md-raised" ng-click="vm.onBrowseClick()">Browse</md-button>
+              </md-sidenav>
+              <div layout="column" flex>
+                <md-content layout="column" flex class="md-padding">
+                    <md-input-container>
+                        <!-- <label>Address</label> -->
+                        <input type="text" aria-label="Address" maps-autocomplete ng-model="vm.locator.address"/>
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Category</label>
+                      <md-select ng-model="vm.category">
+                        <md-optgroup label="Category">
+                          <md-option value="all">All</md-option>
+                          <md-option ng-value="category" ng-repeat="category in vm.categories"> {{vm.prettyCategory(category)}} </md-option>
+                        </md-optgroup>
+                      </md-select>
+                    </md-input-container>
+                    <md-input-container>
+                      <label>Radius(km)</label>
+                      <input ng-model="vm.radius" type="number" step="0.01" max="50" min="0.01" flex>
+                    </md-input-container>
+                    <md-button class="md-accent" ng-click="vm.onSubmitLocator()" >Submit</md-button>
+                </md-content>
+              </div>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="planning">
+          <md-content class="md-padding">
+            <div layout="row" flex>
+              <div layout="column" flex>
+                <md-content layout="column" flex class="md-padding">
+                  <div layout="row" flex>
+                    <md-input-container flex>
+                      <label>From</label>
+                      <input type="text" ng-model="vm.meeting.from"/>
+                    </md-input-container>
+                    <md-button class="md-raised md-primary" ng-click="vm.getLocation()">Get Location</md-button>
+                  </div>
+                  <md-input-container>
+                    <label>To</label>
+                    <input type="text" ng-model="vm.meeting.to"/>
+                  </md-input-container>
+                  <md-button class="md-accent" ng-click="vm.onSubmitMeeting()">Submit</md-button>
+                </md-content>
+              </div>
+            </div>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-content>
   </div>
   <!-- Angular Material Dependencies -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/services/services.js"></script>
+  <script src="js/directives/directives.js"></script>
+  <script src="js/controllers/mainController.js"></script>
+
 </body>
 
-</html>
-<script src="js/index.js"></script>
-
-
-
-
-  </body>
 </html>

@@ -5,6 +5,7 @@ const PORT = 3000;
  ************************************************************/
 
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 var ejs = require('ejs');
 var mongoose = require('mongoose');
@@ -23,6 +24,12 @@ db.once('open', function (callback) {
 
 app.engine('html', ejs.renderFile);
 app.use(express.static("./public"));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json({
+    extended: true
+}));
 //app.use(express.static(__dirname + "/bower_components"));
 
 //grabbing the schemas
@@ -30,38 +37,6 @@ var User = require("./app/models/user").User;
 var Meeting = require("./app/models/meeting").Meeting;
 
 
-/*************************************
- * Setting up endpoints
- **************************************/
-
-app.get('/findUser', function (req, res) {
-    if (req.query && req.query.name) {
-
-        User.find({name: req.query.name}).exec(callback);
-    }
-});
-
-app.get('/createUser', function (req, res) {
-    if (req.query && req.query.name) {
-
-        var name = req.query.name;
-        var transport = req.query.transport;
-        var channels = req.query.channels;
-        var callback = function(err) {
-            if (err){
-                console.log("ERR: " + err);
-                res.send("Failure", 403);
-            }else{
-                res.send("Success",200);
-            }
-        };
-
-        var user = new User({name : name, transport : transport, channels : channels});
-        user.save(callback);
-    } else {
-        res.send("Invalid - need name", 406);
-    }
-});
 
 
 /***********************************************************

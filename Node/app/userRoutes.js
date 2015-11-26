@@ -2,8 +2,9 @@
 var User = require('./models/user').User;
 module.exports = function(app) {
 
+    //get a user
     app.get('/user/*',function(req, res){
-        var username = req.originalUrl.substring(6);
+        var userId = req.params[0];
         var callback = function (err, user) {
             if (err) {
                 console.log("ERR: " + err);
@@ -12,21 +13,41 @@ module.exports = function(app) {
                 res.json(user);
             }
         };
-        User.find({name: username}).exec(callback);
+        User.find({_id: userId}).exec(callback);
     });
+
+
+    /**
+     * @api {post} /user/:id update user info
+     * @apiName updateUser
+     * @apiGroup user
+     *
+     * @apiParam {String} user id
+     */
 
     app.post('/user/*', function(req, res){
-
+        var userId = req.params[0];
+        var callback = function(err) {
+            if (err) {
+                console.log("ERR: " + err);
+                res.send("Failure:",403);
+            }else{
+                res.send("Success",200);
+            }
+        }
+        User.findOneAndUpdate({_id:userId},{name: req.body.name}, callback);
     });
 
+
+    //add a user
     app.put('/user/*',function(req, res){
-        var username = req.originalUrl.substring(6);
-        var callback = function(err) {
+        var username = req.params[0];
+        var callback = function(err, document) {
             if (err){
                 console.log("ERR: " + err);
                 res.send("Failure", 403);
             }else{
-                res.send("Success",200);
+                res.send(document._id, 200);
             }
         };
         var user = new User({name: username, transport : "test"});

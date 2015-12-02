@@ -5,7 +5,6 @@ const PORT = 3000;
  ************************************************************/
 
 var express = require('express');
-var bodyParser = require('body-parser');
 var app = express();
 var ejs = require('ejs');
 var request = require('request');
@@ -33,38 +32,17 @@ app.use(bodyParser.json({
 }));
 //app.use(express.static(__dirname + "/bower_components"));
 
-//grabbing the schemas
-var User = require("./app/models/user").User;
-var Meeting = require("./app/models/meeting").Meeting;
-
 // Private configuration
 var privateConfig = require('./config.js')();
-
-
-/*************************************
- * Setting up endpoints
- **************************************/
-
-
-app.post('/locator', function(req, res) {
-    var requestString = req.body.request;
-    var key = '&key=' + privateConfig.API_KEY;
-    request(requestString + key, function (error, response, body) {
-      if (!error && response.statusCode/100 !== 4) {
-        console.log(body)
-      }
-    })
-    res.send(200);
-});
-
-
 
 
 /***********************************************************
  App Startup
  ************************************************************/
-require('./app/pageRoutes')(app);
-require('./app/userRoutes')(app);
+require('./app/routes/pageRoutes')(app);
+require('./app/routes/userRoutes')(app);
+require('./app/routes/locationRoutes')(app);
+require('./app/routes/meetingRoutes')(app);
 
 var server = app.listen(PORT, function () {
     console.log("Server started successfully on port " + PORT + ".");

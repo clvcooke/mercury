@@ -1,9 +1,9 @@
 //Configure express routing
-var User = require('./models/user').User;
+var User = require('./../models/User').User;
 module.exports = function(app) {
 
     //get a user
-    app.get('/user/*',function(req, res){
+    app.get('/API/user/*',function(req, res){
         var userId = req.params[0];
         var callback = function (err, user) {
             if (err) {
@@ -25,7 +25,7 @@ module.exports = function(app) {
      * @apiParam {String} user id
      */
 
-    app.post('/user/*', function(req, res){
+    app.post('/API/user/*', function(req, res){
         var userId = req.params[0];
         var callback = function(err) {
             if (err) {
@@ -34,13 +34,13 @@ module.exports = function(app) {
             }else{
                 res.send("Success",200);
             }
-        }
+        };
         User.findOneAndUpdate({_id:userId},{name: req.body.name}, callback);
     });
 
 
     //add a user
-    app.put('/user/*',function(req, res){
+    app.put('/API/user/*',function(req, res){
         var username = req.params[0];
         var callback = function(err, document) {
             if (err){

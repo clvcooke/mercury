@@ -43,6 +43,7 @@ require('./app/routes/pageRoutes')(app);
 require('./app/routes/userRoutes')(app);
 require('./app/routes/locationRoutes')(app);
 require('./app/routes/meetingRoutes')(app);
+require('./app/routes/notificationRoutes')(app);
 
 var server = app.listen(PORT, function () {
     console.log("Server started successfully on port " + PORT + ".");

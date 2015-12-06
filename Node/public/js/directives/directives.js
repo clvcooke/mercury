@@ -6,9 +6,9 @@ app.directive('mapsAutocomplete', function() {
                 types: [],
                 componentRestrictions: {}
             };
-            scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
+            index = scope.gPlace.push(new google.maps.places.Autocomplete(element[0], options)) - 1;
 
-            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+            google.maps.event.addListener(scope.gPlace[index], 'place_changed', function() {
                 scope.$apply(function() {
                     model.$setViewValue(element.val());                
                 });

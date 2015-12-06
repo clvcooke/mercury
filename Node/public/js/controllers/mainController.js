@@ -1,28 +1,26 @@
-app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'Categories', function ($scope, $http, $mdSidenav, Categories) {
+app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces', function ($scope, $http, $mdSidenav, GooglePlaces) {
     var vm = this;
-
-    vm.meeting = {
-        from: {},
-        to: {}
-    };
-
-    vm.locator = {
-        address: '',
-        category: ''
-    }
-    vm.category = "all";
-    vm.categories = Categories.categories;
-    vm.prettyCategory = Categories.prettyCategory;
+    vm.type = "all";
+    vm.types = GooglePlaces.types;
+    vm.prettyType = GooglePlaces.prettyType;
+    $scope.gPlace = [];
+    vm.gModel = [];
 
     vm.onSubmitLocator = function () {
         var requestString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-        var latitude = $scope.gPlace.getPlace().geometry.location.lat();
-        var longitude = $scope.gPlace.getPlace().geometry.location.lng();
+        var latitude = 0;
+        var longitude = 0;
+        var places = $scope.gPlace.length;
+        $.each($scope.gPlace, function(key, val) {
+            latitude += val.getPlace().geometry.location.lat();
+            longitude += val.getPlace().geometry.location.lng();
+        });
+        latitude /= places;
+        longitude /= places;
         requestString += "location=" + latitude + ","  + longitude;
         requestString += "&radius=" + vm.radius * 1000;
-        requestString += vm.category === 'all' ? '' : '&category="'+ vm.category;
+        requestString += vm.type === 'all' ? '' : '&type='+ vm.type;
         json = JSON.stringify({request: requestString});
-        console.log(requestString);
 
         $http({
             url: "http://localhost:3000/locator",
@@ -30,21 +28,41 @@ app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'Categories',
             data: json,
             method: "POST",
         }).success(function(res) {
-                console.log('Success');
-            });
+            //convert string to Json
+            res = JSON.parse(res);
+            var results = res.results;
+            console.log(results);
+            // $.each(results, function(key, val) {
+                // console.log(val.name);
+            // });
+        });
     };
 
-    vm.onCreateClick = function() {
-        console.log(vm.category)
+    vm.onAddLocation = function() {
+        vm.gModel.push("");
     };
 
-    vm.onBrowseClick = function() {
-
+    vm.test = function() {
+        $.each($scope.gPlace, function(key, val) {
+            console.log(val.getPlace())
+        })
+        console.log(vm.gModel)
     };
 
     vm.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
     };
+
+    vm.deleteLocation = function() {
+        var index = vm.gModel.length - 1;
+        vm.gModel.splice(index, 1);
+        $scope.gPlace.splice(index, 1);
+    }
+
+    vm.foo = function() {
+        console.log(vm.gModel[index])
+        console.log($scope.gPlace[index])
+    }
 
     vm.getLocation = function() {
         function recordPosition(position) {

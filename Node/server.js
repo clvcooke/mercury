@@ -35,13 +35,12 @@ app.use(bodyParser.json({
 // Private configuration
 var privateConfig = require('./config.js')();
 
-
 /***********************************************************
  App Startup
  ************************************************************/
 require('./app/routes/pageRoutes')(app);
 require('./app/routes/userRoutes')(app);
-require('./app/routes/locationRoutes')(app);
+require('./app/routes/locationRoutes')(app, request, privateConfig);
 require('./app/routes/meetingRoutes')(app);
 require('./app/routes/notificationRoutes')(app);
 

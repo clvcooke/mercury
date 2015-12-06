@@ -51,10 +51,11 @@ app.post('/locator', function(req, res) {
     var key = '&key=' + privateConfig.API_KEY;
     request(requestString + key, function (error, response, body) {
       if (!error && response.statusCode/100 !== 4) {
-        console.log(body)
+        res.status(200).json(body);
+      } else {
+        res.send(200);
       }
     })
-    res.send(200);
 });
 
 

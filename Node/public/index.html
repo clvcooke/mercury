@@ -32,29 +32,32 @@
           <md-content class="md-padding">
             <div layout="row" flex>
               <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-                  <md-button class="md-raised" ng-click="vm.onCreateClick()">Create</md-button>
-                  <md-button class="md-raised" ng-click="vm.onBrowseClick()">Browse</md-button>
+                  <md-button class="md-raised" ng-click="vm.onAddLocation()">Add Place</md-button>
+                  <md-button class="md-raised md-accent" ng-click="vm.deleteLocation()">Delete Place</md-button>
+                  <md-button class="md-raised" ng-click="vm.test()">Test</md-button>
               </md-sidenav>
               <div layout="column" flex>
                 <md-content layout="column" flex class="md-padding">
-                    <md-input-container>
-                        <!-- <label>Address</label> -->
-                        <input type="text" aria-label="Address" maps-autocomplete ng-model="vm.locator.address"/>
+                  <div layout="row" ng-repeat="autocomplete in vm.gModel track by $index" flex>
+                    <md-input-container flex>
+                      <label>Location {{$index+1}}</label>
+                      <input type="text" aria-label="Address" placeholder="Enter a location" maps-autocomplete ng-model="vm.gModel[$index]"/>
                     </md-input-container>
-                    <md-input-container>
-                      <label>Category</label>
-                      <md-select ng-model="vm.category">
-                        <md-optgroup label="Category">
-                          <md-option value="all">All</md-option>
-                          <md-option ng-value="category" ng-repeat="category in vm.categories"> {{vm.prettyCategory(category)}} </md-option>
-                        </md-optgroup>
-                      </md-select>
-                    </md-input-container>
-                    <md-input-container>
-                      <label>Radius(km)</label>
-                      <input ng-model="vm.radius" type="number" step="0.01" max="50" min="0.01" flex>
-                    </md-input-container>
-                    <md-button class="md-accent" ng-click="vm.onSubmitLocator()" >Submit</md-button>
+                  </div>
+                  <md-input-container>
+                    <label>Type</label>
+                    <md-select ng-model="vm.type">
+                      <md-optgroup label="Type">
+                        <md-option value="all">All</md-option>
+                        <md-option ng-value="type" ng-repeat="type in vm.types"> {{vm.prettyType(type)}} </md-option>
+                      </md-optgroup>
+                    </md-select>
+                  </md-input-container>
+                  <md-input-container>
+                    <label>Radius (km)</label>
+                    <input ng-model="vm.radius" type="number" step="0.01" max="50" min="0.01" flex>
+                  </md-input-container>
+                  <md-button class="md-accent" ng-click="vm.onSubmitLocator()" >Submit</md-button>
                 </md-content>
               </div>
             </div>

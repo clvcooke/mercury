@@ -1,7 +1,7 @@
-app.factory('Categories', function() {
-	var Categories = {};
+app.factory('GooglePlaces', function() {
+	var Types = {};
 
-	Categories.categories = ['accounting',
+	Types.types = ['accounting',
 		'airport',
 		'amusement_park ',
 		'aquarium',
@@ -98,7 +98,7 @@ app.factory('Categories', function() {
 		'veterinary_care',
 		'zoo'];
 
-	Categories.prettyCategory = function(string) {
+	Types.prettyType = function(string) {
 		String.prototype.replaceAt = function(index, character) {
 		    return this.substr(0, index) + character + this.substr(index+character.length);
 		}
@@ -112,8 +112,5 @@ app.factory('Categories', function() {
 		return string;
 	}
 
-	Categories.foo = function() {
-		
-	}
-	return Categories;
+	return Types;
 });

@@ -1,9 +1,13 @@
-var Meeting = require('./../models/Meeting').Meeting;
+var Meeting = require('./../models/meeting').Meeting;
+var fs     = require('fs');
+var crypto = require('crypto');
+var path   = require('path');
+
 module.exports = function (app) {
 
     //get an existing meeting
-    app.get('/API/meeting/*', function (req, res) {
-        var meetingId = req.params[0];
+    app.get('/api/meeting/:meetingId', function (req, res) {
+        var meetingId = req.params.meetingId;
         var callback = function (err, meeting) {
             if (err) {
                 console.log("ERR: " + err);
@@ -16,8 +20,8 @@ module.exports = function (app) {
     });
 
     //update a meeting
-    app.post('/API/meeting/*', function(req, res){
-        var meetingId = req.params[0];
+    app.put('/api/meeting/:meetingId', function(req, res){
+        var meetingId = req.params.meetingId;
         var callback = function(err) {
             if (err) {
                 console.log("ERR: " + err);
@@ -38,7 +42,7 @@ module.exports = function (app) {
     });
 
     //create a new meeting(sends back meeting id)
-    app.put('/API/meeting/*', function (req, res) {
+    app.post('/api/meeting', function (req, res) {
         var callback = function (err, document) {
             if (err) {
                 console.log("ERR: " + err);
@@ -67,4 +71,5 @@ module.exports = function (app) {
             callback(new Error("Missing parameter"), null);
         }
     });
-};
+
+    

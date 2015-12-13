@@ -1,4 +1,4 @@
-app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces', function ($scope, $http, $mdSidenav, GooglePlaces) {
+app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces','$cookies', function ($scope, $http, $mdSidenav, GooglePlaces, $cookies) {
     var vm = this;
     vm.type = "all";
     vm.types = GooglePlaces.types;
@@ -75,6 +75,19 @@ app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces
         } else {
             alert("Geolocation is not supported by this browser.");
         }
+    }
+
+    vm.hideOverlay = function() {
+        document.getElementById("overlay").style.display = 'none';
+    }
+
+    //check if we already stored a cookie
+    var userId = $cookies.get('userId');
+    //if we don't create an empty mongo user for them
+    if (!userId) {
+        $http.post('/api/user/','').then(function(response){
+            $cookies.put('userId', response.data);
+        });
     }
 
 }]);

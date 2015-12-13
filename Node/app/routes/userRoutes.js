@@ -17,8 +17,7 @@ module.exports = function(app) {
     });
 
     //add a user
-    app.post('/api/user/:userId', function(req, res) {
-        var username = req.params.userId;
+    app.post('/api/user/', function(req, res) {
         var callback = function(err, document) {
             if (err) {
                 console.log("ERR: " + err);
@@ -27,7 +26,7 @@ module.exports = function(app) {
                 res.send(document._id, 200);
             }
         };
-        var user = new User({name: username, transport : "test"});
+        var user = new User();
         user.save(callback);
     });
 

@@ -11,7 +11,6 @@ module.exports = function (app) {
                 message: 'Hello Android!'
             }
         });
-
         var sender = new gcm.Sender('AIzaSyA1RA60gaXhnqAzk_mtfirIvGSzmh_vgxE');
         message.addData('testkey', 'test value');
         sender.send(message, {registrationTokens: regTokens},4, function (err, response) {

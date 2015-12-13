@@ -1,1 +1,1 @@
-var app = angular.module('Agora', ['ngMaterial']);
+var app = angular.module('Agora', ['ngMaterial', 'ngCookies']);

@@ -47,5 +47,3 @@ require('./app/routes/notificationRoutes')(app);
 var server = app.listen(PORT, function () {
     console.log("Server started successfully on port " + PORT + ".");
 });
-
-

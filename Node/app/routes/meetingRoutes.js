@@ -20,25 +20,25 @@ module.exports = function (app) {
     });
 
     //update a meeting
-    app.put('/api/meeting/:meetingId', function(req, res){
+    app.put('/api/meeting/:meetingId', function (req, res) {
         var meetingId = req.params.meetingId;
-        var callback = function(err) {
+        var callback = function (err) {
             if (err) {
                 console.log("ERR: " + err);
-                res.send("Failure:",403);
-            }else{
-                res.send("Success",200);
+                res.send("Failure:", 403);
+            } else {
+                res.send("Success", 200);
             }
         };
         var object = {};
         var body = req.body;
-        if (body){
+        if (body) {
             if (body.time) object[time] = body.time;
             if (body.location) object[location] = JSON.parse(body.location);
             if (body.users) object[users] = JSON.parse(body.users);
             if (body.subject) object[subject] = body.subject;
         }
-        Meeting.findOneAndUpdate({_id:meetingId}, object, callback);
+        Meeting.findOneAndUpdate({_id: meetingId}, object, callback);
     });
 
     //create a new meeting(sends back meeting id)
@@ -47,7 +47,7 @@ module.exports = function (app) {
             if (err) {
                 console.log("ERR: " + err);
                 res.send("Failure: " + err, 403);
-            }else{
+            } else {
                 res.send(document._id, 200);
             }
         };
@@ -58,18 +58,18 @@ module.exports = function (app) {
         //lat lng pair
         var location;
         var time;
-        if (body){
+        if (body) {
             users = JSON.parse(body.users);
             subject = body.subject;
             location = JSON.parse(body.location);
             time = body.time;
         }
-        if (users && subject && location && time){
-            var meeting = new Meeting({time: time, location : location, users: users, subject: subject});
+        if (users && subject && location && time) {
+            var meeting = new Meeting({time: time, location: location, users: users, subject: subject});
             meeting.save(callback);
-        }else{
+        } else {
             callback(new Error("Missing parameter"), null);
         }
     });
 
-    
+};

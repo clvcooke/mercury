@@ -8,28 +8,19 @@ module.exports = function (app) {
     //get an existing meeting
     app.get('/api/meeting/:meetingId', function (req, res) {
         var meetingId = req.params.meetingId;
-        var callback = function (err, meeting) {
+        Meeting.find({_id: meetingId}).exec(function (err, meeting) {
             if (err) {
                 console.log("ERR: " + err);
                 res.send("Failure: " + err, 403);
             } else {
                 res.json(meeting);
             }
-        };
-        Meeting.find({_id: meetingId}).exec(callback);
+        });
     });
 
     //update a meeting
     app.put('/api/meeting/:meetingId', function (req, res) {
         var meetingId = req.params.meetingId;
-        var callback = function (err) {
-            if (err) {
-                console.log("ERR: " + err);
-                res.send("Failure:", 403);
-            } else {
-                res.send("Success", 200);
-            }
-        };
         var object = {};
         var body = req.body;
         if (body) {
@@ -38,7 +29,14 @@ module.exports = function (app) {
             if (body.users) object[users] = JSON.parse(body.users);
             if (body.subject) object[subject] = body.subject;
         }
-        Meeting.findOneAndUpdate({_id: meetingId}, object, callback);
+        Meeting.findOneAndUpdate({_id: meetingId}, object, function (err) {
+            if (err) {
+                console.log("ERR: " + err);
+                res.send("Failure:", 403);
+            } else {
+                res.send("Success", 200);
+            }
+        });
     });
 
     //create a new meeting(sends back meeting id)

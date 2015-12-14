@@ -37,7 +37,7 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', functi
             });
         }
 
-        $q.when(userId).then(function() {
+        $q.when(userId).then(function () {
             vm.meeting.users = [userId];
             //save the meeting data in a meeting object
             $http.post('/api/meeting/', vm.meeting).then(function (response) {

@@ -48,6 +48,7 @@ module.exports = function(app) {
                     res.send("Failure:",403);
                 }else{
                     var newLocation = user.locations;
+                    if (!newLocation) newLocation = {};
                     newLocation[req.body.meeting_id] = req.body.location;
                     User.findOneAndUpdate({_id:userId}, {locations: newLocation}, callback);
                 }

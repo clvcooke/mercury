@@ -1,1 +1,1 @@
-var app = angular.module('Agora', ['ngMaterial', 'ngCookies']);
+var app = angular.module('mercury', ['ngMaterial', 'ngCookies']);

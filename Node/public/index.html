@@ -33,7 +33,7 @@
                 <md-content class="md-padding" ng-controller="MeetingController as meet">
                     <md-input-container>
                         <label>Title</label>
-                        <input ng-model="meet.meeting.subject">
+                        <input ng-model="meet.meeting.title">
                     </md-input-container>
                     <md-input-container>
                         <label>Type</label>
@@ -49,9 +49,9 @@
                         <md-input-container flex>
                             <label>Your Location</label>
                             <input type="text" aria-label="Address" placeholder="Enter a location" maps-autocomplete
-                                   ng-model="meet.location"/>
+                                   ng-model="meet.meeting.location"/>
                         </md-input-container>
-                        <md-datepicker ng-model="meet.meeting.time" md-placeholder="Enter date"
+                        <md-datepicker ng-model="meet.meeting.date" md-placeholder="Enter date"
                                        md-min-date="meet.minDate" md-max-date="meet.maxDate"></md-datepicker>
                     </div>
                     <div layout="row">
@@ -99,28 +99,6 @@
                     </div>
                 </md-content>
             </md-tab>
-            <!-- <md-tab label="planning">
-              <md-content class="md-padding">
-                <div layout="row" flex>
-                  <div layout="column" flex>
-                    <md-content layout="column" flex class="md-padding">
-                      <div layout="row" flex>
-                        <md-input-container flex>
-                          <label>From</label>
-                          <input type="text" ng-model="main.meeting.from"/>
-                        </md-input-container>
-                        <md-button class="md-raised md-primary" ng-click="main.getLocation()">Get Location</md-button>
-                      </div>
-                      <md-input-container>
-                        <label>To</label>
-                        <input type="text" ng-model="main.meeting.to"/>
-                      </md-input-container>
-                      <md-button class="md-accent" ng-click="main.onSubmitMeeting()">Submit</md-button>
-                    </md-content>
-                  </div>
-                </div>
-              </md-content>
-            </md-tab> -->
         </md-tabs>
     </md-content>
 </div>

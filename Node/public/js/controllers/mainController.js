@@ -1,4 +1,4 @@
-app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces','$cookies', function ($scope, $http, $mdSidenav, GooglePlaces, $cookies) {
+app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces', function ($scope, $http, $mdSidenav, GooglePlaces) {
     var vm = this;
     vm.type = "all";
     vm.types = GooglePlaces.types;
@@ -79,15 +79,6 @@ app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces
 
     vm.hideOverlay = function() {
         document.getElementById("overlay").style.display = 'none';
-    }
-
-    //check if we already stored a cookie
-    var userId = $cookies.get('userId');
-    //if we don't create an empty mongo user for them
-    if (!userId) {
-        $http.post('/api/user/','').then(function(response){
-            $cookies.put('userId', response.data);
-        });
-    }
+    };
 
 }]);

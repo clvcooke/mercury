@@ -1,7 +1,7 @@
 var Meeting = require('./../models/meeting').Meeting;
-var fs     = require('fs');
+var fs = require('fs');
 var crypto = require('crypto');
-var path   = require('path');
+var path = require('path');
 
 module.exports = function (app) {
 
@@ -52,20 +52,14 @@ module.exports = function (app) {
             }
         };
         var body = req.body;
-        //array of users
-        var users;
-        var subject;
-        //lat lng pair
-        var location;
-        var time;
-        if (body) {
-            users = JSON.parse(body.users);
-            subject = body.subject;
-            location = JSON.parse(body.location);
-            time = body.time;
-        }
-        if (users && subject && location && time) {
-            var meeting = new Meeting({time: time, location: location, users: users, subject: subject});
+        if (body && body.title && body.type && body.location && body.time ) {
+            var meeting = new Meeting({
+                title: body.title,
+                type: body.type,
+                location: body.location,
+                time: body.time,
+                users: body.users
+            });
             meeting.save(callback);
         } else {
             callback(new Error("Missing parameter"), null);

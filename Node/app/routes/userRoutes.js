@@ -31,7 +31,7 @@ module.exports = function(app) {
     });
 
     //update a user
-    app.put('/api/user/:userId', function(req, res) {
+    app.patch('/api/user/:userId', function(req, res) {
         var userId = req.params.userId;
         var callback = function(err) {
             if (err) {
@@ -41,7 +41,23 @@ module.exports = function(app) {
                 res.send("Success",200);
             }
         };
-        User.findOneAndUpdate({_id:userId}, {name: req.body.name}, callback);
+
+
+        if (req.body.location && req.body.meeting_id){
+            var userCallback = function (err, user) {
+                if (err || !user) {
+                    console.log("ERR: " + err);
+                    res.send("Failure:",403);
+                }else{
+                    var newLocation = user.locations;
+                    newLocation[req.body.meeting_id] = req.body.location;
+                    User.findOneAndUpdate({_id:userId}, {locations: newLocation}, callback);
+                }
+            };
+            User.findOne({_id:userId}).exec(userCallback);
+        }else{
+            callback(new Error());
+        }
     });
 
 };

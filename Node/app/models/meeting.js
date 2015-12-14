@@ -4,10 +4,11 @@
 var mongoose = require('mongoose');
 
 var MeetingSchema = new mongoose.Schema({
+    title : String,
+    type: String,
+    location : String,
     time : Number,
-    location : [Number],
-    users : [mongoose.Schema.Types.ObjectId],
-    subject : String
+    users : [mongoose.Schema.Types.ObjectId]
 });
 
 var Meeting = mongoose.model('Meeting', MeetingSchema);

@@ -23,7 +23,7 @@ var mongoOptions = {
     pass: privateConfig.mongoPassword
 };
 
-mongoose.connect('mongodb://159.203.31.35:27017/test', mongoOptions);
+mongoose.connect('mongodb://@ds029605.mongolab.com:29605/mercury', mongoOptions);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {

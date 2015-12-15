@@ -9,3 +9,7 @@ md-sidenav.md-locked-open {
   min-width: 150px !important;
   max-width: 150px !important;
 }
+
+#map {
+	height:800px;
+}

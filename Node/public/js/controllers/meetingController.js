@@ -1,7 +1,6 @@
 app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', function ($scope, $http, $cookies, $q) {
     var vm = this;
     vm.today = new Date();
-
     vm.minDate = new Date(
         vm.today.getFullYear(),
         vm.today.getMonth(),
@@ -21,6 +20,15 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', functi
         time: vm.today,
         users: []
     };
+
+    vm.users = [];
+
+    vm.loadMap = function() {
+    	vm.map = new google.maps.Map(document.getElementById('map'), {
+    		center: {lat: -34.397, lng: 150.644},
+    		zoom: 8
+	    });
+    }
 
     vm.submit = function () {
 

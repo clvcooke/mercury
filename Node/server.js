@@ -15,7 +15,15 @@ var mongoose = require('mongoose');
 /***********************************************************
  Configuration
  ************************************************************/
-mongoose.connect('mongodb://159.203.31.35:27017/test');
+// Private configuration
+var privateConfig = require('./config.js')();
+
+var mongoOptions = {
+    user: privateConfig.mongoUserName,
+    pass: privateConfig.mongoPassword
+};
+
+mongoose.connect('mongodb://@ds029605.mongolab.com:29605/mercury', mongoOptions);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
@@ -32,8 +40,7 @@ app.use(bodyParser.json({
 }));
 //app.use(express.static(__dirname + "/bower_components"));
 
-// Private configuration
-var privateConfig = require('./config.js')();
+
 
 /***********************************************************
  App Startup

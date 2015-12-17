@@ -58,12 +58,7 @@ app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces
         vm.gModel.splice(index, 1);
         $scope.gPlace.splice(index, 1);
     }
-
-    vm.foo = function() {
-        console.log(vm.gModel[index])
-        console.log($scope.gPlace[index])
-    }
-
+    
     vm.getLocation = function() {
         function recordPosition(position) {
             // vm.fromCoords.latitude = position.coords.latitude;

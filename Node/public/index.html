@@ -41,11 +41,11 @@
             <div layout="row">
                 <md-input-container flex>
                     <label>Your Location</label>
-                    <input type="text" aria-label="Address" placeholder="Enter a location" maps-autocomplete
+                    <input type="text" aria-label="Address" placeholder="Enter a location"
                            ng-model="meet.meeting.location"/>
                 </md-input-container>
                 <md-datepicker ng-model="meet.meeting.date" md-placeholder="Enter date"
-                               md-min-date="meet.minDate" md-max-date="meet.maxDate"></md-datepicker>
+                               md-min-date="meet.minDate"></md-datepicker>
             </div>
             <div layout="row">
                 <md-button class="md-accent" ng-click="meet.submit()" flex>Submit</md-button>
@@ -81,11 +81,16 @@
                                    md-min-date="meet.minDate" md-max-date="meet.maxDate"></md-datepicker>
                 </md-content>
                 <md-content layout="column">
+                    <div class="md-headline" flex>Users</div>
                     <div layout="row">
-                        <div class="md-headline" flex>Users</div>
                         <md-button class="md-raised md-primary" ng-click="meet.addUser()" flex>Add</md-button>
+                        <md-button class="md-raised md-accent" ng-click="meet.deleteUser()" flex>Delete</md-button>
                     </div>
-                    <div layout="row" ng-repeat="user in meet.users">
+                    <div layout="row" ng-repeat="user in meet.users track by $index">
+                        <md-input-container flex>
+                            <label>Location {{$index+1}}</label>
+                            <input type="text" ng-model="meet.users[$index]" aria-label="Address" placeholder="Enter a location" maps-autocomplete/>
+                        </md-input-container>
                     </div>
                 </md-content>
             </div>

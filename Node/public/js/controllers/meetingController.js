@@ -1,5 +1,8 @@
-app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', function ($scope, $http, $cookies, $q) {
+app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', 'GooglePlaces', function ($scope, $http, $cookies, $q, GooglePlaces) {
     var vm = this;
+    vm.types = GooglePlaces.types;
+    vm.prettyType = GooglePlaces.prettyType;
+
     vm.today = new Date();
     vm.minDate = new Date(
         vm.today.getFullYear(),
@@ -17,7 +20,9 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', functi
 
     vm.users = [];
 
-    $scope.updateMap = function() {
+    $scope.gPlace = [];
+
+    $scope.update = function() {
     	var latitude = 0;
     	var longitude = 0;
     	var places = 0;
@@ -48,8 +53,29 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', functi
     	var index = vm.users.length - 1;
     	vm.users.splice(index, 1);
         $scope.gPlace.splice(index, 1);
-        $scope.updateMap();
+        $scope.update();
     }
+
+}]);
+
+app.controller('CreateMeetingController', ['$scope', '$http', '$cookies', '$q', function ($scope, $http, $cookies, $q) {
+    vm = this;
+
+    vm.today = new Date();
+    vm.minDate = new Date(
+        vm.today.getFullYear(),
+        vm.today.getMonth(),
+        vm.today.getDate());
+
+    vm.meeting = {
+        title: "",
+        type: "All",
+        location: "",
+        date: vm.today,
+        time: vm.today,
+    };
+
+    $scope.gPlace = [];
 
     vm.submit = function () {
         //create the user object if we don't have it
@@ -77,5 +103,4 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', functi
             });
         });
     }
-
 }]);

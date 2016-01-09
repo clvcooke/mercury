@@ -12,7 +12,9 @@ app.directive('mapsAutocomplete', function() {
                 scope.$apply(function() {
                     model.$setViewValue(element.val());                
                 });
-                scope.updateMap();
+                if (scope.update){
+                    scope.update();
+                }
             });
         }
     };

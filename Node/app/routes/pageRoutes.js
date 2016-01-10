@@ -1,3 +1,5 @@
+var http = require('http');
+
 //Configure express routing
 module.exports = function(app)
 {
@@ -6,8 +8,13 @@ module.exports = function(app)
 		res.render("../public/index.html");
 	});
 
-    app.get('/meetings/*', function(req, res){
-
+    app.get('/meeting/:meetingId', function(req, res){
+        var meetingId = req.params.meetingId;
+        if (meetingId){
+            res.render('../public/views/meeting.html');
+        }else{
+            //show an error page
+        }
     });
 
 };

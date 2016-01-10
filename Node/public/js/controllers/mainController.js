@@ -1,6 +1,5 @@
 app.controller('MainController', ['$scope', '$http', '$mdSidenav', 'GooglePlaces', function ($scope, $http, $mdSidenav, GooglePlaces) {
     var vm = this;
-    vm.type = "all";
     vm.types = GooglePlaces.types;
     vm.prettyType = GooglePlaces.prettyType;
     $scope.gPlace = [];

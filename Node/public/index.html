@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1"/>
     <title>Mercury</title>
-    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.css">
 </head>
@@ -21,14 +20,14 @@
 </md-toolbar>
 <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="meeting setup">
-        <md-content class="md-padding" ng-controller="MeetingController as meet">
+        <md-content class="md-padding" ng-controller="CreateMeetingController as create">
             <md-input-container>
                 <label>Title</label>
-                <input ng-model="meet.meeting.title">
+                <input ng-model="create.meeting.title">
             </md-input-container>
             <md-input-container>
                 <label>Type</label>
-                <md-select ng-model="meet.type">
+                <md-select ng-model="create.meeting.type">
                     <md-optgroup label="Type">
                         <md-option value="all">All</md-option>
                         <md-option ng-value="type" ng-repeat="type in main.types"> {{main.prettyType(type)}}
@@ -39,58 +38,14 @@
             <div layout="row">
                 <md-input-container flex>
                     <label>Your Location</label>
-                    <input type="text" aria-label="Address" placeholder="Enter a location"
-                           ng-model="meet.meeting.location"/>
+                    <input type="text" aria-label="Address" maps-autocomplete placeholder="Enter a location"
+                           ng-model="create.meeting.location"/>
                 </md-input-container>
-                <md-datepicker ng-model="meet.meeting.date" md-placeholder="Enter date"
-                               md-min-date="meet.minDate"></md-datepicker>
+                <md-datepicker ng-model="create.meeting.date" md-placeholder="Enter date"
+                               md-min-date="create.minDate"></md-datepicker>
             </div>
             <div layout="row">
-                <md-button class="md-accent" ng-click="meet.submit()" flex>Submit</md-button>
-            </div>
-        </md-content>
-    </md-tab>
-    <md-tab label="meeting" layout="column">
-        <md-content class="tabView" layout="row" flex ng-controller="MeetingController as meet">
-            <div id="map" flex ng-init="meet.loadMap()">
-            </div>
-            <div layout="column" style="padding: 10px" flex="30">
-                <md-content layout="column">
-                    <div class="md-headline">Meeting Information</div>
-                    <md-input-container>
-                        <label>Title</label>
-                        <input ng-model="meet.meeting.title">
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Radius (km)</label>
-                        <input ng-model="meet.radius" type="number" step="0.01" max="50" min="0.01">
-                    </md-input-container>
-                    <md-input-container>
-                    <label>Type</label>
-                        <md-select ng-model="meet.type">
-                            <md-optgroup label="Type">
-                                <md-option value="all">All</md-option>
-                                <md-option ng-value="type" ng-repeat="type in main.types"> {{main.prettyType(type)}}
-                                </md-option>
-                            </md-optgroup>
-                        </md-select>
-                    </md-input-container>
-                    <md-datepicker ng-model="meet.meeting.date" md-placeholder="Enter date"
-                                   md-min-date="meet.minDate" md-max-date="meet.maxDate"></md-datepicker>
-                </md-content>
-                <md-content layout="column">
-                    <div class="md-headline" flex>Users</div>
-                    <div layout="row">
-                        <md-button class="md-raised md-primary" ng-click="meet.addUser()" flex>Add</md-button>
-                        <md-button class="md-raised md-accent" ng-click="meet.deleteUser()" flex>Delete</md-button>
-                    </div>
-                    <div layout="row" ng-repeat="user in meet.users track by $index">
-                        <md-input-container flex>
-                            <label>Location {{$index+1}}</label>
-                            <input type="text" ng-model="meet.users[$index]" aria-label="Address" placeholder="Enter a location" maps-autocomplete/>
-                        </md-input-container>
-                    </div>
-                </md-content>
+                <md-button class="md-accent" ng-click="create.submit()" flex>Submit</md-button>
             </div>
         </md-content>
     </md-tab>
@@ -151,8 +106,6 @@
 <script src="js/directives/directives.js"></script>
 <script src="js/controllers/mainController.js"></script>
 <script src="js/controllers/meetingController.js"></script>
-<script src="js/serviceWorkers/gcmWorker.js"></script>
-<script src="js/push.js"></script>
 
 </body>
 </html>

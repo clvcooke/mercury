@@ -28,3 +28,5 @@ npm-debug.log
 Node/bower_components/
 Node/node_modules/
 .idea/
+
+*~

@@ -8,11 +8,12 @@ module.exports = function (app) {
     //get an existing meeting
     app.get('/api/meeting/:meetingId', function (req, res) {
         var meetingId = req.params.meetingId;
-        Meeting.find({_id: meetingId}).exec(function (err, meeting) {
+        Meeting.findOne({_id: meetingId}).lean().exec(function (err, meeting) {
             if (err) {
                 console.log("ERR: " + err);
                 res.send("Failure: " + err, 403);
             } else {
+                //check if this is OK?
                 res.json(meeting);
             }
         });

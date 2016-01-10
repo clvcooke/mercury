@@ -10,26 +10,11 @@ module.exports = function(app)
 
     app.get('/meeting/:meetingId', function(req, res){
         var meetingId = req.params.meetingId;
-
-		//http request to get the mongo object
-		var option = {
-            host: 'localhost',
-            port: 3000,
-			path: '/api/meeting/' + meetingId
-		};
-
-		var callback = function(response){
-            response.setEncoding('utf8');
-            response.on('data', function (res2) {
-               console.log("SDF");
-            });
-
-
-
-		};
-
-		http.request(option, callback).end();
-
+        if (meetingId){
+            res.render('../public/views/meeting.html');
+        }else{
+            //show an error page
+        }
     });
 
 };

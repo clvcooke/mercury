@@ -10,10 +10,10 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', 'Googl
         vm.today.getDate());
 
     vm.meeting = {
+        id: "",
         title: "",
         type: "All",
-        location: "",
-        date: vm.today,
+        locations: [],
         time: vm.today,
         users: []
     };
@@ -27,15 +27,35 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', 'Googl
     	var longitude = 0;
     	var places = 0;
     	$.each($scope.gPlace, function(key, val) {
-    		if (val.getPlace()) {
+            var place = val.getPlace();
+    		if (place) {
+                vm.users[key].location.latitude = place.geometry.location.lat();
+                vm.users[key].location.longitude = place.geometry.location.lng();
+                vm.users[key].location.name = place.formatted_address;
     			places += 1;
-    			latitude += val.getPlace().geometry.location.lat();
-	            longitude += val.getPlace().geometry.location.lng();
+    			latitude += place.geometry.location.lat();
+	            longitude += place.geometry.location.lng();
     		}
         });
-        latitude /= places;
-        longitude /= places;
-        vm.map.panTo({lat: latitude, lng: longitude}); 
+        if ($scope.gPlace.length > 0) {
+            latitude /= places;
+            longitude /= places;
+            vm.map.panTo({lat: latitude, lng: longitude}); 
+        }
+    }
+
+    vm.load = function() {
+        var url = window.location.href;
+        ind = url.lastIndexOf("/") + 1;
+        vm.meeting.id = url.slice(ind, ind + 24);
+        $http.get('/api/meeting/' + vm.meeting.id).then(function (response) {
+            var meeting = response.data;
+            vm.meeting.title = response.data.title;
+            vm.meeting.type = response.data.type;
+            vm.meeting.users = response.data.users;
+            vm.meeting.time = new Date(response.data.time);
+        });
+        $scope.update();
     }
 
     vm.loadMap = function() {
@@ -46,7 +66,7 @@ app.controller('MeetingController', ['$scope', '$http', '$cookies', '$q', 'Googl
     }
 
     vm.addUser = function() {
-    	vm.users.push("");
+    	vm.users.push({name: "", location:{}});
     }
 
     vm.deleteUser = function() {
@@ -70,18 +90,19 @@ app.controller('CreateMeetingController', ['$scope', '$http', '$cookies', '$q', 
     vm.meeting = {
         title: "",
         type: "All",
-        location: "",
-        date: vm.today,
-        time: vm.today,
+        locations: [],
+        time: vm.today
     };
 
     $scope.gPlace = [];
 
     vm.submit = function () {
+        vm.meeting.locations.push($scope.gPlace[0]);
         //create the user object if we don't have it
         var userId = $cookies.get('user_id');
+        var meeting = angular.copy(vm.meeting);
         //convert the meeting to epoch
-        vm.meeting.time = Date.parse(vm.meeting.date);
+        meeting.time = Date.parse(vm.meeting.time);
 
         if (!userId) {
             $http.post('/api/user/', '').then(function (response) {
@@ -93,11 +114,11 @@ app.controller('CreateMeetingController', ['$scope', '$http', '$cookies', '$q', 
         $q.when(userId).then(function () {
             vm.meeting.users = [userId];
             //save the meeting data in a meeting object
-            $http.post('/api/meeting/', vm.meeting).then(function (response) {
+            $http.post('/api/meeting/', meeting).then(function (response) {
                 //patch the user with a new location
                 var data = {
                     meeting_id: response.data,
-                    location: vm.meeting.location
+                    locations: vm.meeting.locations
                 }
                 $http.patch('/api/user/' + userId, data);
             });

@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var MeetingSchema = new mongoose.Schema({
     title : String,
     type: String,
-    location : String,
+    location : [String],
     time : Number,
     users : [mongoose.Schema.Types.ObjectId]
 });

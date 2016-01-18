@@ -55,7 +55,7 @@ module.exports = function (app) {
             var meeting = new Meeting({
                 title: body.title,
                 type: body.type,
-                location: body.location,
+                location: [body.location],
                 time: body.time,
                 users: body.users
             });

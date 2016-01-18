@@ -82,18 +82,18 @@ module.exports = function (app) {
                     //TODO clean up this validation
                     //if the user doesn't have a location we are in deep shit
                     var locations = user.locations;
-                    if (locations){
+                    if (locations) {
                         //parse the locations for the meeting we want
                         var meetingId = body.meetingId;
-                        if (meetingId){
+                        if (meetingId) {
                             var meetingLocations = locations[meetingId];
                             //assuming meetinglocations are a JSON object
                             var name = body.name;
                             var location = body.location;
-                            if (name && location){
+                            if (name && location) {
                                 meetingLocations.push({name: location});
-                                User.findOneAndUpdate({_id: userId}, {"locations": meetingLocations}, function(err){
-                                    if (!err){
+                                User.findOneAndUpdate({_id: userId}, {"locations": meetingLocations}, function (err) {
+                                    if (!err) {
                                         success = true;
                                     }
                                 });
@@ -105,11 +105,12 @@ module.exports = function (app) {
 
                     console.log(user);
 
-                }).then(
-                    if (success){
-                        res.send("Success", 200);
-                    }else {
-                        res.send("Failure", 403);
+                }).then(function () {
+                        if (success) {
+                            res.send("Success", 200);
+                        } else {
+                            res.send("Failure", 403);
+                        }
                     }
                 );
 
